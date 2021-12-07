@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Place extends Model
 {
     use HasFactory;
+
+    public function subDistrict()
+    {
+        return $this->belongsTo(SubDistrict::class);
+    }
 }
