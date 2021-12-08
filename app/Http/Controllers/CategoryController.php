@@ -20,6 +20,7 @@ class CategoryController extends Controller
             $categories = Category::query();
 
             return DataTables::of($categories)
+                ->addIndexColumn()
                 ->addColumn('action', 'categories.dt-action')
                 ->toJson();
         }

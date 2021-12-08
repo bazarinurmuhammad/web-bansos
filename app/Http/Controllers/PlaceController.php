@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Place;
+use App\Models\SubDistrict;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
 class PlaceController extends Controller
@@ -19,6 +21,7 @@ class PlaceController extends Controller
             $places = Place::with('subDistrict');
 
             return DataTables::of($places)
+                ->addIndexColumn()
                 ->addColumn('subDistrictName', function (Place $place) {
                     return $place->subDistrict->name;
                 })
@@ -36,7 +39,9 @@ class PlaceController extends Controller
      */
     public function create()
     {
-        //
+        return view('places.create', [
+            'subDistricts' => SubDistrict::get(),
+        ]);
     }
 
     /**
@@ -47,7 +52,36 @@ class PlaceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => ['required'],
+            'description' => ['required'],
+            'address' => ['required'],
+            'phone' => ['required', 'numeric'],
+            'image' => ['required', 'image'],
+            'latitude' => ['required'],
+            'longitude' => ['required']
+        ]);
+
+        $image = null;
+
+        if ($request->has('image')) {
+            $image = $request->file('image')->store('images');
+        }
+
+        Place::create([
+            'sub_district_id' => $request->sub_district_id,
+            'name' => $request->name,
+            'description' => $request->description,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'image' => $image,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude
+        ]);
+
+        session()->flash('success', 'Berhasil tambah data tempat kuliner');
+
+        return redirect()->route('place.index');
     }
 
     /**
@@ -67,9 +101,12 @@ class PlaceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Place $place)
     {
-        //
+        return view('places.edit', [
+            'subDistricts' => SubDistrict::get(),
+            'place' => $place
+        ]);
     }
 
     /**
@@ -79,9 +116,41 @@ class PlaceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Place $place)
     {
-        //
+        $this->validate($request, [
+            'name' => ['required'],
+            'description' => ['required'],
+            'address' => ['required'],
+            'phone' => ['required', 'numeric'],
+            'latitude' => ['required'],
+            'longitude' => ['required']
+        ]);
+
+        $image = $place->image;
+
+        if ($request->has('image')) {
+            if (Storage::exists($place->image)) {
+               Storage::delete($place->image);
+            }
+
+            $image = $request->file('image')->store('images');
+        }
+
+        $place->update([
+            'sub_district_id' => $request->sub_district_id,
+            'name' => $request->name,
+            'description' => $request->description,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'image' => $image,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude
+        ]);
+
+        session()->flash('success', 'Berhasil perbarui data tempat kuliner');
+
+        return redirect()->route('place.index');
     }
 
     /**
@@ -90,8 +159,18 @@ class PlaceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Place $place)
     {
-        //
+        if ($place->delete()) {
+            session()->flash('error', 'Data dihapus');
+
+            return response()->json([
+                'success' => true,
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+        ]);
     }
 }

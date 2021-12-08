@@ -22,6 +22,26 @@
                 <tbody></tbody>
             </table>
         </div>
+
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Hapus Data</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Apakah kamu yakin menghapus data ini?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batalkan</button>
+                        <button type="button" class="btn btn-danger" data-id="" id="confirmDelete">Hapus</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     @push('extra-styles')
@@ -38,7 +58,7 @@
                     serverSide: true,
                     ajax: '{!! route('place.index') !!}',
                     columns: [
-                        { data: 'id', name: 'id' },
+                        { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false },
                         { data: 'name', name: 'name' },
                         { data: 'subDistrictName', name: 'subDistrictName' },
                         { data: 'description', name: 'description' },
@@ -48,6 +68,31 @@
                     ]
                 });
             });
+
+            $('#dataTable').on('click', 'a#delete', function (e) {
+                e.preventDefault()
+                var id = $(this).data('id')
+                $('#confirmDelete').attr('data-id', id)
+                $('#deleteModal').modal('show')
+            })
+
+            $('#confirmDelete').click(function (e) {
+                e.preventDefault()
+                var id = $(this).data('id')
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/place/' + id,
+                    data: {
+                        '_token': "{{ csrf_token() }}"
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            window.location.href = ''
+                        }
+                    },
+                })
+            })
         </script>
     @endpush
 </x-templates.default>

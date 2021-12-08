@@ -36,7 +36,7 @@
                     serverSide: true,
                     ajax: '{!! route('subdistrict.index') !!}',
                     columns: [
-                        { data: 'id', name: 'id' },
+                        { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false },
                         { data: 'name', name: 'name' },
                         { data: 'slug', name: 'slug' }
                     ]

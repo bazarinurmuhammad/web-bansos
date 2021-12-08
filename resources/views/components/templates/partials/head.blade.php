@@ -32,10 +32,10 @@
     <link href="{{ asset('dist/css/tabler-payments.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('dist/css/tabler-buttons.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('dist/css/demo.min.css') }}" rel="stylesheet"/>
-    <style>
-        body {
-            display: none;
-        }
-    </style>
+{{--    <style>--}}
+{{--        body {--}}
+{{--            display: none;--}}
+{{--        }--}}
+{{--    </style>--}}
     @stack('extra-styles')
 </head>
