@@ -12,7 +12,8 @@
                     @csrf
                     <div class="form-group">
                         <label for="">Nama</label>
-                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Masukkan nama kategori">
+                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                            placeholder="Masukkan nama kategori">
 
                         @error('name')
                             <span class="invalid-feedback">

@@ -9,21 +9,22 @@
         <div class="card-body">
             <table class="table table-striped" id="dataTable">
                 <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nama</th>
-                    <th>Kecamatan</th>
-                    <th>Deskripsi</th>
-                    <th>Alamat</th>
-                    <th>Telepon</th>
-                    <th>Tindakan</th>
-                </tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Kecamatan</th>
+                        <th>Deskripsi</th>
+                        <th>Alamat</th>
+                        <th>Telepon</th>
+                        <th>Tindakan</th>
+                    </tr>
                 </thead>
                 <tbody></tbody>
             </table>
         </div>
 
-        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -45,7 +46,7 @@
     </div>
 
     @push('extra-styles')
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.css"/>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.css" />
     @endpush
 
     @push('extra-scripts')
@@ -57,26 +58,47 @@
                     processing: true,
                     serverSide: true,
                     ajax: '{!! route('place.index') !!}',
-                    columns: [
-                        { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false },
-                        { data: 'name', name: 'name' },
-                        { data: 'subDistrictName', name: 'subDistrictName' },
-                        { data: 'description', name: 'description' },
-                        { data: 'address', name: 'address' },
-                        { data: 'phone', name: 'phone' },
-                        { data: 'action', name: 'action' }
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex',
+                            orderable: false
+                        },
+                        {
+                            data: 'name',
+                            name: 'name'
+                        },
+                        {
+                            data: 'subDistrictName',
+                            name: 'subDistrictName'
+                        },
+                        {
+                            data: 'description',
+                            name: 'description'
+                        },
+                        {
+                            data: 'address',
+                            name: 'address'
+                        },
+                        {
+                            data: 'phone',
+                            name: 'phone'
+                        },
+                        {
+                            data: 'action',
+                            name: 'action'
+                        }
                     ]
                 });
             });
 
-            $('#dataTable').on('click', 'a#delete', function (e) {
+            $('#dataTable').on('click', 'a#delete', function(e) {
                 e.preventDefault()
                 var id = $(this).data('id')
                 $('#confirmDelete').attr('data-id', id)
                 $('#deleteModal').modal('show')
             })
 
-            $('#confirmDelete').click(function (e) {
+            $('#confirmDelete').click(function(e) {
                 e.preventDefault()
                 var id = $(this).data('id')
 
@@ -86,7 +108,7 @@
                     data: {
                         '_token': "{{ csrf_token() }}"
                     },
-                    success: function (response) {
+                    success: function(response) {
                         if (response.success) {
                             window.location.href = ''
                         }

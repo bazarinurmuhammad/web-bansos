@@ -23,7 +23,7 @@
     </div>
 
     @push('extra-styles')
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.css"/>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.css" />
     @endpush
 
     @push('extra-scripts')
@@ -35,10 +35,19 @@
                     processing: true,
                     serverSide: true,
                     ajax: '{!! route('subdistrict.index') !!}',
-                    columns: [
-                        { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false },
-                        { data: 'name', name: 'name' },
-                        { data: 'slug', name: 'slug' }
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex',
+                            orderable: false
+                        },
+                        {
+                            data: 'name',
+                            name: 'name'
+                        },
+                        {
+                            data: 'slug',
+                            name: 'slug'
+                        }
                     ]
                 });
             });
