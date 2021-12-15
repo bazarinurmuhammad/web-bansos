@@ -1,30 +1,29 @@
 <x-templates.default>
-    <x-slot name="title">Data Tempat Kuliner</x-slot>
+    <x-slot name="title">Data Menu Dari {{ $place->name }}</x-slot>
 
     <div class="card">
         <div class="card-header">
-            <a href="{{ route('place.create') }}" class="btn btn-primary">Tambah Data</a>
+            <a href="{{ route('menu.create', $place) }}" class="btn btn-primary">Tambah Data</a>
         </div>
 
         <div class="card-body">
             <table class="table table-striped" id="dataTable">
                 <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nama</th>
-                        <th>Kecamatan</th>
-                        <th>Deskripsi</th>
-                        <th>Alamat</th>
-                        <th>Telepon</th>
-                        <th>Tindakan</th>
-                    </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Nama</th>
+                    <th>Gambar</th>
+                    <th>Deskripsi</th>
+                    <th>Harga</th>
+                    <th>Tindakan</th>
+                </tr>
                 </thead>
                 <tbody></tbody>
             </table>
         </div>
 
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -38,7 +37,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batalkan</button>
-                        <button type="button" class="btn btn-danger" data-id="" id="confirmDelete">Hapus</button>
+                        <button type="button" class="btn btn-danger" data-id-place="" data-id-menu="" id="confirmDelete">Hapus</button>
                     </div>
                 </div>
             </div>
@@ -57,31 +56,27 @@
                 $('#dataTable').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('place.index') !!}',
+                    ajax: '{!! route('menu.index', request()->segment(2)) !!}',
                     columns: [{
-                            data: 'DT_RowIndex',
-                            name: 'DT_RowIndex',
-                            orderable: false
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false
+                    },
+                        {
+                            data: 'name',
+                            name: 'name'
                         },
                         {
-                            data: 'place-menu',
-                            name: 'place-menu'
-                        },
-                        {
-                            data: 'subDistrictName',
-                            name: 'subDistrictName'
+                            data: 'image',
+                            name: 'image'
                         },
                         {
                             data: 'description',
                             name: 'description'
                         },
                         {
-                            data: 'address',
-                            name: 'address'
-                        },
-                        {
-                            data: 'phone',
-                            name: 'phone'
+                            data: 'price',
+                            name: 'price'
                         },
                         {
                             data: 'action',
@@ -93,18 +88,22 @@
 
             $('#dataTable').on('click', 'a#delete', function(e) {
                 e.preventDefault()
-                var id = $(this).data('id')
-                $('#confirmDelete').attr('data-id', id)
+                var idPlace = $(this).data('id-place')
+                var idMenu = $(this).data('id-menu')
+
+                $('#confirmDelete').attr('data-id-place', idPlace)
+                $('#confirmDelete').attr('data-id-menu', idMenu)
                 $('#deleteModal').modal('show')
             })
 
             $('#confirmDelete').click(function(e) {
                 e.preventDefault()
-                var id = $(this).data('id')
+                var idPlace = $(this).data('id-place')
+                var idMenu = $(this).data('id-menu')
 
                 $.ajax({
                     type: 'DELETE',
-                    url: '/place/' + id,
+                    url: '/place/' + idPlace + '/menu/' + idMenu,
                     data: {
                         '_token': "{{ csrf_token() }}"
                     },

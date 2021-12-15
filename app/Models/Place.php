@@ -13,4 +13,9 @@ class Place extends Model
     {
         return $this->belongsTo(SubDistrict::class);
     }
+
+    public function menus()
+    {
+        return $this->hasMany(Menu::class);
+    }
 }
