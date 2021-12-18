@@ -10,4 +10,9 @@ class SubDistrict extends Model
     use HasFactory;
 
     public $timestamps = false;
+
+    public function places()
+    {
+        return $this->hasMany(Place::class);
+    }
 }
