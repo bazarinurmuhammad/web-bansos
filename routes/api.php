@@ -7,6 +7,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('register', \App\Http\Controllers\Api\Auth\RegisterController::class);
+Route::post('login', \App\Http\Controllers\Api\Auth\LoginController::class);
+
 Route::get('/place', \App\Http\Controllers\Api\Place\ListPlaceController::class);
 Route::get('/place/{place}', \App\Http\Controllers\Api\Place\ShowPlaceController::class);
 Route::get('/place/{place}/menu', \App\Http\Controllers\Api\Menu\ListMenuController::class);
