@@ -18,3 +18,7 @@ Route::get('/sub-district', \App\Http\Controllers\Api\SubDistrict\ListSubDistric
 Route::get('/sub-district/{subDistrict}', \App\Http\Controllers\Api\SubDistrict\ShowSubDistrictController::class);
 Route::get('/sub-district/{subDistrict}/place', \App\Http\Controllers\Api\SubDistrict\ListPlaceBySubDistrictController::class);
 
+Route::post('/user/place/{place}/favourite', \App\Http\Controllers\Api\User\StoreFavouritePlaceController::class)->middleware('auth:sanctum');
+Route::delete('/user/place/{place}/favourite', \App\Http\Controllers\Api\User\DeleteFavouritePlaceController::class)->middleware('auth:sanctum');
+Route::get('/user/place', \App\Http\Controllers\Api\User\ListFavouritePlaceController::class)->middleware('auth:sanctum');
+
