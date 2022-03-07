@@ -7,7 +7,7 @@ use App\Http\Resources\PlaceResource;
 use App\Models\Place;
 use Illuminate\Http\Request;
 
-class ListPlaceController extends Controller
+class SearchPlaceController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -17,12 +17,9 @@ class ListPlaceController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $places = Place::query();
+        $places = Place::searchPlace($request->keyword)
+            ->paginate(5);
 
-        if ($request->has('keyword')) {
-            $places->searchPlace($request->keyword);
-        }
-
-        return PlaceResource::collection($places->paginate(5));
+        return PlaceResource::collection($places);
     }
 }

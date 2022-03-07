@@ -11,6 +11,7 @@ Route::post('register', \App\Http\Controllers\Api\Auth\RegisterController::class
 Route::post('login', \App\Http\Controllers\Api\Auth\LoginController::class);
 
 Route::get('/place', \App\Http\Controllers\Api\Place\ListPlaceController::class);
+Route::get('/place/search', \App\Http\Controllers\Api\Place\SearchPlaceController::class);
 Route::get('/place/{place}', \App\Http\Controllers\Api\Place\ShowPlaceController::class);
 Route::get('/place/{place}/menu', \App\Http\Controllers\Api\Menu\ListMenuController::class);
 Route::get('/place/{place:id}/menu/{menu:id}', \App\Http\Controllers\Api\Menu\ShowMenuController::class);

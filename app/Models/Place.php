@@ -18,6 +18,17 @@ class Place extends Model
         return null;
     }
 
+    public function scopeSearchPlace($query, $keyword)
+    {
+        return $query->where('name', 'like', '%' . $keyword . '%')
+            ->orWhere('description', 'like', '%' . $keyword . '%')
+            ->orWhere('address', 'like', '%' . $keyword . '%')
+            ->orWhere('phone', 'like', '%' . $keyword . '%')
+            ->orWhereHas('subDistrict', function ($query) use ($keyword) {
+                $query->where('name', 'like', '%' . $keyword . '%');
+            });
+    }
+
     public function subDistrict()
     {
         return $this->belongsTo(SubDistrict::class);
