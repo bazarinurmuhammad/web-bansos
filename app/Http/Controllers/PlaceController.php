@@ -27,7 +27,7 @@ class PlaceController extends Controller
                 })
                 ->addColumn('place-menu', 'places.place-link')
                 ->addColumn('action', 'places.dt-action')
-                ->rawColumns(['place-menu'])
+                ->rawColumns(['place-menu', 'action'])
                 ->toJson();
         }
 
