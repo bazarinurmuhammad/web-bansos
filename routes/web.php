@@ -7,7 +7,7 @@ use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ProporserController;
 
 Route::view('/', 'landingPage');
-Route::redirect('/login', 'login');
+Route::view('/login', 'auth.login')->name('login');
 
 Route::get('/proporser', [ProporserController::class, 'index'])->name('proporse.index');
 Route::post('/proporser', [ProporserController::class, 'store'])->name('proporse.store');
