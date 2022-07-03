@@ -16,24 +16,7 @@ class SubDistrictSeeder extends Seeder
     public function run()
     {
         $datas = [
-            'Sidoarjo',
-            'Balongbendo',
-            'Buduran',
-            'Candi',
-            'Gedangan',
-            'Jabon',
-            'Krembung',
-            'Krian',
-            'Prambon',
-            'Porong',
-            'Sedati',
-            'Sukodono',
-            'Taman',
-            'Tanggulangin',
-            'Tarik',
-            'Tulangan',
-            'Waru',
-            'Wonoayu',
+            'Gunungpuyuh',
         ];
 
         foreach ($datas as $data) {

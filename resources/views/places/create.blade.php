@@ -1,10 +1,10 @@
 <x-templates.default>
-    <x-slot name="title">Tambah Tempat Kuliner</x-slot>
+    <x-slot name="title">Tambah Pengajuan Bansos</x-slot>
 
     <form action="{{ route('place.store') }}" class="card" method="post" enctype="multipart/form-data">
         @csrf
         <div class="card-header">
-            <h1 class="card-title">Tambah Data Tempat Kuliner</h1>
+            <h1 class="card-title">Form Data Pengajuan Bansos</h1>
         </div>
 
         <div class="card-body">
