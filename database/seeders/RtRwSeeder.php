@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Rt;
+use App\Models\Rw;
 use Illuminate\Database\Seeder;
 
-class UserSeeder extends Seeder
+class RtRwSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,10 +15,11 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'name' => 'Admin',
-            'email' => 'admin@mail.com',
-            'password' => bcrypt('12345678'),
+        Rt::create([
+            'name' => '001'
+        ]);
+        Rw::create([
+            'name' => '004'
         ]);
     }
 }

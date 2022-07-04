@@ -15,9 +15,9 @@ class CreateProporsersTable extends Migration
     {
         Schema::create('proporsers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('rt_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('rw_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('income_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('rt_id')->nullable()->constrained()->nullOnDelete()->cascadeOnUpdate();
+            $table->foreignId('rw_id')->nullable()->constrained()->nullOnDelete()->cascadeOnUpdate();
+            $table->foreignId('income_id')->nullable()->constrained()->nullOnDelete()->cascadeOnUpdate();
             $table->string('nik');
             $table->string('kk');
             $table->string('name');
@@ -28,6 +28,7 @@ class CreateProporsersTable extends Migration
             $table->string('address');
             $table->string('phone');
             $table->string('photo');
+            $table->enum('status',['pending', 'diterima', 'ditolak']);
             $table->double('latitude');
             $table->double('longitude');
             $table->timestamps();

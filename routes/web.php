@@ -1,12 +1,17 @@
 <?php
 
+use App\Http\Controllers\AdminProporserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RtController;
 use App\Http\Controllers\RwController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ProporserController;
+use App\Http\Controllers\ReceiverController;
+use App\Http\Controllers\RejectController;
+use App\Http\Controllers\RootController;
+use App\Models\Proporser;
 
-Route::view('/', 'landingPage');
+Route::get('/', [RootController::class, 'index'])->name('root');
 Route::view('/login', 'auth.login')->name('login');
 
 Route::get('/proporser', [ProporserController::class, 'index'])->name('proporse.index');
@@ -16,13 +21,6 @@ Route::middleware('auth')->group(function() {
     Route::get('/home', function () {
         return view('welcome');
     })->name('home');
-
-    Route::get('/sub-district', \App\Http\Controllers\SubDistrictController::class)->name('subdistrict.index');
-    Route::resource('/category', \App\Http\Controllers\CategoryController::class);
-    Route::resource('/place', \App\Http\Controllers\PlaceController::class);
-    Route::resource('/place/{place}/menu', \App\Http\Controllers\PlaceMenuController::class)->scoped();
-
-
 
     Route::get('/rt', [RtController::class, 'index'])->name('rt.index');
     Route::get('/rt/create', [RtController::class, 'create'])->name('rt.create');
@@ -35,8 +33,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/rw/create', [RwController::class, 'create'])->name('rw.create');
     Route::post('/rw/create', [RwController::class, 'store'])->name('rw.store');
     Route::get('/rw/{id}', [RwController::class, 'edit'])->name('rw.edit');
-    Route::put
-    ('/rw/{id}', [RwController::class, 'edit'])->name('rw.update');
+    Route::put('/rw/{id}', [RwController::class, 'edit'])->name('rw.update');
     Route::delete('/rw/{id}', [RwController::class, 'destroy'])->name('rw.destroy');
 
     Route::get('/income', [IncomeController::class, 'index'])->name('income.index');
@@ -45,5 +42,20 @@ Route::middleware('auth')->group(function() {
     Route::get('/income/{id}', [IncomeController::class, 'edit'])->name('income.edit');
     Route::put('/income/{id}', [IncomeController::class, 'update'])->name('income.update');
     Route::delete('/income/{id}', [IncomeController::class, 'destroy'])->name('income.destroy');
+
+    Route::get('/manage-proporser', [AdminProporserController::class, 'index'])->name('manage-proporser.index');
+    Route::get('/manage-proporser/{id}', [AdminProporserController::class, 'edit']);
+    Route::put('/manage-proporser/{id}', [AdminProporserController::class, 'update']);
+    Route::delete('/manage-proporser/{id}', [AdminProporserController::class, 'destroy']);
+
+    Route::get('/manage-receiver', [ReceiverController::class, 'index'])->name('manage-receiver.index');
+    Route::get('/manage-receiver/{id}', [ReceiverController::class, 'edit']);
+    Route::put('/manage-receiver/{id}', [ReceiverController::class, 'update']);
+    Route::delete('/manage-receiver/{id}', [ReceiverController::class, 'destroy']);
+
+    Route::get('/manage-reject', [RejectController::class, 'index'])->name('manage-reject.index');
+    Route::get('/manage-reject/{id}', [RejectController::class, 'edit']);
+    Route::put('/manage-reject/{id}', [RejectController::class, 'update']);
+    Route::delete('/manage-reject/{id}', [RejectController::class, 'destroy']);
 
 });

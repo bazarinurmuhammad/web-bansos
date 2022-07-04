@@ -23,7 +23,23 @@ class Proporser extends Model
         'address',
         'phone',
         'photo',
+        'status',
         'latitude',
         'longitude'
     ];
+
+    public function rt()
+    {
+        return $this->belongsTo(Rt::class, 'rt_id');
+    }
+
+    public function rw()
+    {
+        return $this->belongsTo(Rw::class, 'rw_id');
+    }
+
+    public function income()
+    {
+        return $this->belongsTo(Income::class, 'income_id');
+    }
 }

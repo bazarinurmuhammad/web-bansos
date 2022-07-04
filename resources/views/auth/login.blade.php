@@ -53,6 +53,7 @@
         <div class="text-center mb-4">
             <img src="./static/logo.svg" height="36" alt="">
         </div>
+        <x-forms.alert />
         <form class="card card-md" action="{{ route('login') }}" method="post">
             @csrf
             <div class="card-body">

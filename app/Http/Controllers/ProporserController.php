@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProporserRequest;
 use Illuminate\Http\Request;
 use App\Models\Rt;
 use App\Models\Rw;
@@ -18,26 +19,8 @@ class ProporserController extends Controller
         return view('proporser.index', compact('rts', 'rws', 'incomes'));
     }
 
-    public function store(Request $request)
+    public function store(ProporserRequest $request)
     {
-        $request->validate([
-            'rt' => ['required'],
-            'rw' => ['required'],
-            'income' => ['required'],
-            'nik' => ['required'],
-            'kk' => ['required'],
-            'name' => ['required'],
-            'province' => ['required'],
-            'regency' => ['required'],
-            'district' => ['required'],
-            'village' => ['required'],
-            'address' => ['required'],
-            'phone' => ['required'],
-            'photo' => ['required', 'image'],
-            'latitude' => ['required'],
-            'longitude' => ['required']
-        ]);
-
         try {
             if ($request->has('photo')) {
                 $photo = $request->file('photo')->store('photos');
@@ -57,15 +40,15 @@ class ProporserController extends Controller
                 'address' => $request->address,
                 'phone' => $request->phone,
                 'photo' => $photo,
+                'status' => 'pending',
                 'latitude' => $request->latitude,
                 'longitude' => $request->longitude,
             ]);
-            session()->flash('success', 'Berhasil tambah data tempat kuliner');
+            session()->flash('success', 'Berhasil tambah data pengajuan bantuan');
             return redirect()->route('proporse.index');
         } catch (\Throwable $th) {
             session()->flash('error', $th->getMessage());
             return redirect()->back();
-
         }
     }
 }

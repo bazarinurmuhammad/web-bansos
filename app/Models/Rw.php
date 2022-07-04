@@ -11,4 +11,9 @@ class Rw extends Model
     protected $fillable =[
         'name'
     ];
+
+    public function proporser()
+    {
+        return $this->hasOne(Proporser::class, 'rw_id');
+    }
 }

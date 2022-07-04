@@ -12,4 +12,9 @@ class Rt extends Model
     protected $fillable =[
         'name'
     ];
+
+    public function proporser()
+    {
+        return $this->hasOne(Proporser::class, 'rt_id');
+    }
 }

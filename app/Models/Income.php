@@ -12,4 +12,9 @@ class Income extends Model
     protected $fillable =[
         'name'
     ];
+
+    public function proporser()
+    {
+        return $this->hasOne(Proporser::class, 'income_id');
+    }
 }
