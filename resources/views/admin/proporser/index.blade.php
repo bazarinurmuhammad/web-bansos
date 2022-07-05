@@ -2,6 +2,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+        <a href="{{ url('/manage-proporser/create') }}" class="btn btn-primary mb-3">Tambah</a>
                 <div class="table-responsive">
                     <table class="table table-striped" id="dataTable">
                         <thead>

@@ -44,6 +44,8 @@ Route::middleware('auth')->group(function() {
     Route::delete('/income/{id}', [IncomeController::class, 'destroy'])->name('income.destroy');
 
     Route::get('/manage-proporser', [AdminProporserController::class, 'index'])->name('manage-proporser.index');
+    Route::get('/manage-proporser/create', [AdminProporserController::class, 'create']);
+    Route::post('/manage-proporser/store', [AdminProporserController::class, 'store']);
     Route::get('/manage-proporser/{id}', [AdminProporserController::class, 'edit']);
     Route::put('/manage-proporser/{id}', [AdminProporserController::class, 'update']);
     Route::delete('/manage-proporser/{id}', [AdminProporserController::class, 'destroy']);

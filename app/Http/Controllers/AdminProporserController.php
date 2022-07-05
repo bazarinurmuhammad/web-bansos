@@ -36,6 +36,48 @@ class AdminProporserController extends Controller
         return view('admin.proporser.index');
     }
 
+    public function create()
+    {
+        $rts = Rt::all();
+        $rws = Rw::all();
+        $incomes = Income::all();
+
+        return view('admin.proporser.create', compact('rts', 'rws', 'incomes'));
+    }
+
+    public function store(ProporserRequest $request)
+    {
+        try {
+            if ($request->has('photo')) {
+                $photo = $request->file('photo')->store('photos');
+            }
+
+            Proporser::create([
+                'rt_id' => $request->rt,
+                'rw_id' => $request->rw,
+                'income_id' => $request->income,
+                'nik' => $request->nik,
+                'kk' => $request->kk,
+                'name' => $request->name,
+                'province' => $request->province,
+                'regency' => $request->regency,
+                'district' => $request->district,
+                'village' => $request->village,
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'photo' => $photo,
+                'status' => 'pending',
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
+            ]);
+            session()->flash('success', 'Berhasil tambah data pengajuan bantuan');
+            return redirect()->route('manage-proporser.index');
+        } catch (\Throwable $th) {
+            session()->flash('error', $th->getMessage());
+            return redirect()->back();
+        }
+    }
+
     public function edit($id)
     {
         $proporser = Proporser::findOrFail($id);
